@@ -1,0 +1,6 @@
+@HomeBudgetIdentityApi_HostAddress = http://localhost:5186
+
+GET {{HomeBudgetIdentityApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
