@@ -7,11 +7,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeBudget.Core", "HomeBudg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{CAFB7840-6B3D-4731-89A6-C124E28420D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeBudget.Identity.Infrastructure", "HomeBudget.Identity.Infrastructure\HomeBudget.Identity.Infrastructure.csproj", "{856EAF94-12FA-4DC2-B205-B025DAE0423C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeBudget.Identity.Infrastructure", "HomeBudget.Identity.Infrastructure\HomeBudget.Identity.Infrastructure.csproj", "{856EAF94-12FA-4DC2-B205-B025DAE0423C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeBudget.Identity.Domain", "HomeBudget.Identity.Domain\HomeBudget.Identity.Domain.csproj", "{FE3F2F90-A7E3-4C27-849D-A0D6DF623161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeBudget.Identity.Domain", "HomeBudget.Identity.Domain\HomeBudget.Identity.Domain.csproj", "{FE3F2F90-A7E3-4C27-849D-A0D6DF623161}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeBudget.Identity.Api", "HomeBudget.Identity.Api\HomeBudget.Identity.Api.csproj", "{F5FE8A70-C29B-4237-9A4D-F998B6AC0D8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{37867505-1FED-44BE-A18A-D746EEF214A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeBudget.Components.Users", "HomeBudget.Components.Users\HomeBudget.Components.Users.csproj", "{7F3B992A-E15E-4769-9A69-2443C72D15F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{46A0FF85-F5C3-4979-BED5-07A1C04AA233}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4CA88EE4-1B0F-4C1A-A4D1-8A6DBDDFB98C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,13 +46,19 @@ Global
 		{F5FE8A70-C29B-4237-9A4D-F998B6AC0D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5FE8A70-C29B-4237-9A4D-F998B6AC0D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5FE8A70-C29B-4237-9A4D-F998B6AC0D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3B992A-E15E-4769-9A69-2443C72D15F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3B992A-E15E-4769-9A69-2443C72D15F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3B992A-E15E-4769-9A69-2443C72D15F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3B992A-E15E-4769-9A69-2443C72D15F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{818E3359-12F1-48F4-9A15-167F183FE662} = {46A0FF85-F5C3-4979-BED5-07A1C04AA233}
 		{856EAF94-12FA-4DC2-B205-B025DAE0423C} = {CAFB7840-6B3D-4731-89A6-C124E28420D7}
 		{FE3F2F90-A7E3-4C27-849D-A0D6DF623161} = {CAFB7840-6B3D-4731-89A6-C124E28420D7}
+		{7F3B992A-E15E-4769-9A69-2443C72D15F3} = {37867505-1FED-44BE-A18A-D746EEF214A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D2B73D4-F0B8-495C-A871-3AE9DC1ACD2F}
