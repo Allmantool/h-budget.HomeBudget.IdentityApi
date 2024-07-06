@@ -25,7 +25,7 @@ env:
 
 jobs:
   build-currency-identity-api:
-    name: Carrency Rates Api Quality Gate
+    name: Identity Api Quality Gate
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -122,7 +122,7 @@ jobs:
         run: |
           dotnet-dotcover test HomeBudgetIdentityApi.sln \
             --dcReportType=HTML \
-            --dcOutput="test-results/rates-coverage.html" \
+            --dcOutput="test-results/identity-coverage.html" \
             --dcFilters="+:HomeBudget.*;-:type=*.IntegrationTests;-:type=*.Tests"
 
       - name: End sonnar scanning
