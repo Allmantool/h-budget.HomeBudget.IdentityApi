@@ -8,7 +8,7 @@ using HomeBudget.Identity.Domain.Models;
 
 namespace HomeBudget.Identity.Api.Controllers
 {
-    [Microsoft.AspNetCore.Components.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class IdentityController(
         IUsersService usersService,
@@ -40,7 +40,7 @@ namespace HomeBudget.Identity.Api.Controllers
                 return BadRequest("Could not authenticate user.");
             }
 
-            var token = jwtBuilder.GetToken(userIdentity.Id);
+            var token = jwtBuilder.GetToken(userIdentity.Key.ToString());
 
             return Ok(token);
         }
@@ -52,13 +52,13 @@ namespace HomeBudget.Identity.Api.Controllers
 
             if (userIdentity != null)
             {
-                return BadRequest("User already exists.");
+                return BadRequest($"The user '{user.Email}' already exists.");
             }
 
             user.SetPassword(user.Password, encryptor);
             await usersService.RegisterUserAsync(user);
 
-            return Ok();
+            return Ok($"The user: '{user.Email}' has been registered");
         }
 
         [HttpGet("validate")]
@@ -70,14 +70,14 @@ namespace HomeBudget.Identity.Api.Controllers
 
             if (userIdentity == null)
             {
-                return NotFound("User not found.");
+                return NotFound($"User: ${email} not found.");
             }
 
             var userId = jwtBuilder.ValidateToken(token);
 
-            if (userId != userIdentity.Id)
+            if (!string.Equals(userId, userIdentity.Key.ToString()))
             {
-                return BadRequest("Invalid token.");
+                return BadRequest($"Invalid token. ${email}");
             }
 
             return Ok(userId);

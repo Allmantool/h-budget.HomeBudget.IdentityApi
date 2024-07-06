@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
+using HomeBudget.Components.Users.Configuration;
 using HomeBudget.Identity.Api.Configuration;
 using HomeBudget.Identity.Api.Extensions;
 using HomeBudget.Identity.Domain.Configuration;
@@ -15,7 +16,7 @@ var services = webAppBuilder.Services;
 var environment = webAppBuilder.Environment;
 
 services
-    .RegisterUsersIoCDependency()
+    .RegisterApiIoCDependency()
     .RegisterUsersIoCDependency();
 
 var configuration = webAppBuilder.Configuration

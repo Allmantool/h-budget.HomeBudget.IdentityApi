@@ -7,6 +7,6 @@ namespace HomeBudget.Identity.Infrastructure
     {
         public ObjectId Id { get; set; }
 
-        public T Payload { get; set; }
+        public T Payload { get; init; }
     }
 }

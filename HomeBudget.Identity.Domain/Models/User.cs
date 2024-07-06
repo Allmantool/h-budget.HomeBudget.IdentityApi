@@ -7,7 +7,6 @@ public class User : DomainEntity
     required public string Email { get; init; }
     required public string Password { get; set; }
 
-    public string Id { get; init; }
     public string Salt { get; set; }
     public bool IsAdmin { get; init; }
 

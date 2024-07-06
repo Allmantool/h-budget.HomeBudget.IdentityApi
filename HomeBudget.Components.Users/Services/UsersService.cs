@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using HomeBudget.Components.Users.Clients.Interfaces;
 using HomeBudget.Components.Users.Models;
@@ -14,13 +15,19 @@ namespace HomeBudget.Components.Users.Services
         {
             var userDocumentResult = await userDocumentsClient.GetByEmailAsync(email);
 
-            var userDocument = userDocumentResult.payload;
+            var userDocument = userDocumentResult.Payload;
+            var user = userDocument?.Payload;
 
-            return userDocument.Payload;
+            return user;
         }
 
         public async Task<User> RegisterUserAsync(User user)
         {
+            if (user != null)
+            {
+                user.Key = Guid.NewGuid();
+            }
+
             var userDocumentResult = await userDocumentsClient
                 .AddUserAsync(
                     new UserDocument
@@ -28,9 +35,9 @@ namespace HomeBudget.Components.Users.Services
                         Payload = user
                     });
 
-            var userDocument = userDocumentResult.payload;
+            var userDocument = userDocumentResult.Payload;
 
-            return userDocument.Payload;
+            return userDocument?.Payload;
         }
     }
 }
