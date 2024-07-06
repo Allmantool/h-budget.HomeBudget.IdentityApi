@@ -24,7 +24,7 @@ env:
   SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
 
 jobs:
-  build-currency-rates-api:
+  build-currency-identity-api:
     name: Carrency Rates Api Quality Gate
     runs-on: ubuntu-latest
     defaults:
@@ -92,7 +92,7 @@ jobs:
           dotnet tool install --global dotnet-sonarscanner --version 5.14.0
 
       - name: Make the scanner script file executable
-        run: | 
+        run: |
           chmod +x ./startsonar.sh
 
       - name: Start sonnar scanning
@@ -113,13 +113,13 @@ jobs:
       - name: Build the solution to quality metrics gathering
         shell: bash
         run: |
-          dotnet build HomeBudgetRatesApi.sln \
+          dotnet build HomeBudgetIdentityApi.sln \
             --no-incremental
 
       - name: Run test (unit + integrations based on test containers) for test coverage collecting
         shell: bash
         run: |
-          dotnet-dotcover test HomeBudgetRatesApi.sln \
+          dotnet-dotcover test HomeBudgetIdentityApi.sln \
             --dcReportType=HTML \
             --dcOutput="test-results/rates-coverage.html" \
             --dcFilters="+:HomeBudget.*;-:type=*.IntegrationTests;-:type=*.Tests"
@@ -137,7 +137,7 @@ jobs:
         run: |
           docker build \
             --target 'final' \
-            -t "${{ secrets.DOCKERHUB_USERNAME }}/homebudget-rates-api:${{ steps.last_tag.outputs.TARGET_TAG }}" \
+            -t "${{ secrets.DOCKERHUB_USERNAME }}/homebudget-identity-api:${{ steps.last_tag.outputs.TARGET_TAG }}" \
             .
 
       - name: Login to Docker Hub
@@ -149,4 +149,4 @@ jobs:
       - name: Push docker image
         shell: bash
         run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/homebudget-rates-api:${{ steps.last_tag.outputs.TARGET_TAG }}"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/homebudget-identity-api:${{ steps.last_tag.outputs.TARGET_TAG }}"
