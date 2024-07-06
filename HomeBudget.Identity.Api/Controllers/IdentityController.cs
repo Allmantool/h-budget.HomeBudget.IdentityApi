@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
 using HomeBudget.Components.Users.Services.Interfaces;
+using HomeBudget.Core.Models;
+using HomeBudget.Identity.Api.Models;
 using HomeBudget.Identity.Domain.Interfaces;
 using HomeBudget.Identity.Domain.Models;
 
@@ -18,47 +21,58 @@ namespace HomeBudget.Identity.Api.Controllers
     {
         [HttpPost("login")]
         public async Task<IActionResult> Login(
-            [FromBody] User user,
+            [FromBody] LoginRequest request,
             [FromQuery(Name = "d")] string destination = "frontend")
         {
-            var userIdentity = await usersService.GetUserByEmailAsync(user.Email);
+            var userIdentity = await usersService.GetUserByEmailAsync(request.Email);
 
             if (userIdentity == null)
             {
-                return NotFound($"User with email: ${user.Email} hasn't been found.");
+                return NotFound($"User with email: {request.Email} hasn't been found.");
             }
 
             if (destination == "backend" && !userIdentity.IsAdmin)
             {
-                return BadRequest("Could not authenticate user.");
+                return BadRequest($"Could not authenticate user '{request.Email}'.");
             }
 
-            var isValid = userIdentity.ValidatePassword(user.Password, encryptor);
+            var isValid = userIdentity.ValidatePassword(request.Password, encryptor);
 
             if (!isValid)
             {
-                return BadRequest("Could not authenticate user.");
+                return BadRequest($"Could not authenticate user {request.Email}.");
             }
 
             var token = jwtBuilder.GetToken(userIdentity.Key.ToString());
 
-            return Ok(token);
+            return Ok(Result<string>.Succeeded(token));
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var userIdentity = await usersService.GetUserByEmailAsync(user.Email);
+            var userForRegistration = new User
+            {
+                Email = request.Email,
+                Password = request.Password,
+            };
+
+            var userIdentity = await usersService.GetUserByEmailAsync(userForRegistration.Email);
 
             if (userIdentity != null)
             {
-                return BadRequest($"The user '{user.Email}' already exists.");
+                return BadRequest($"The user '{userForRegistration.Email}' already exists.");
             }
 
-            user.SetPassword(user.Password, encryptor);
-            await usersService.RegisterUserAsync(user);
+            userForRegistration.SetPassword(userForRegistration.Password, encryptor);
+            await usersService.RegisterUserAsync(userForRegistration);
 
-            return Ok($"The user: '{user.Email}' has been registered");
+            var response = new Result<Guid>(
+                userForRegistration.Key,
+                $"The user: '{userForRegistration.Email}' has been registered",
+                true);
+
+            return Ok(response);
         }
 
         [HttpGet("validate")]
@@ -70,17 +84,17 @@ namespace HomeBudget.Identity.Api.Controllers
 
             if (userIdentity == null)
             {
-                return NotFound($"User: ${email} not found.");
+                return NotFound($"User: '{email}' not found.");
             }
 
             var userId = jwtBuilder.ValidateToken(token);
 
             if (!string.Equals(userId, userIdentity.Key.ToString()))
             {
-                return BadRequest($"Invalid token. ${email}");
+                return BadRequest($"Invalid token. '{email}'");
             }
 
-            return Ok(userId);
+            return Ok(Result<string>.Succeeded(userId));
         }
     }
 }
