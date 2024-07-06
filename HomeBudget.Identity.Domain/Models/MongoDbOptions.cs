@@ -2,7 +2,7 @@
 {
     public record MongoDbOptions
     {
-        public string ConnectionString { get; set; }
-        public string UsersDatabaseName { get; set; }
+        public string ConnectionString { get; init; }
+        public string UsersDatabaseName { get; init; }
     }
 }

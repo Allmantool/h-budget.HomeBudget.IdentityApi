@@ -85,7 +85,7 @@ namespace HomeBudget.Identity.Domain
 
                 IdentityModelEventSource.ShowPII = true;
 
-                ClaimsPrincipal principal = tokenHandler.ValidateToken(token, parameters, out _);
+                var principal = tokenHandler.ValidateToken(token, parameters, out _);
 
                 return principal;
             }

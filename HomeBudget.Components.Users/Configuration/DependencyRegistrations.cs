@@ -14,7 +14,12 @@ namespace HomeBudget.Components.Users.Configuration
         {
             return services
                 .AddScoped<IUsersService, UsersService>()
-                .AddScoped<IUserDocumentsClient, UserDocumentsClient>();
+                .RegisterMongoDbClient();
+        }
+
+        private static IServiceCollection RegisterMongoDbClient(this IServiceCollection services)
+        {
+            return services.AddSingleton<IUserDocumentsClient, UserDocumentsClient>();
         }
     }
 }
