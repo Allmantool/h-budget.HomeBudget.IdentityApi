@@ -82,7 +82,7 @@
       <Rule Id="CA1901" Action="Error" />
       <Rule Id="CA2002" Action="Error" />
 	  <!-- Do not directly await a Task -->
-      <Rule Id="CA2007" Action="Error" />
+      <Rule Id="CA2007" Action="None" />
       <Rule Id="CA2100" Action="Error" />
       <Rule Id="CA2101" Action="Error" />
       <Rule Id="CA2108" Action="Error" />
