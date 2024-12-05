@@ -1,15 +1,15 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /scr
 
-COPY --from=mcr.microsoft.com/dotnet/sdk:8.0 /usr/share/dotnet/shared /usr/share/dotnet/shared
+COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 /usr/share/dotnet/shared /usr/share/dotnet/shared
 
 ARG BUILD_VERSION
 ENV BUILD_VERSION=${BUILD_VERSION}
@@ -40,7 +40,9 @@ RUN export JAVA_HOME=/usr/lib/jvm/jdk-21.0.1
 RUN export PATH=$JAVA_HOME/bin:$PATH
 
 RUN dotnet new tool-manifest
-RUN dotnet tool install snitch --tool-path /tools --version 2.0.0
+
+# Not supported for .net 9.0 release, will be fixed, as soon as, the dedicated updated will be implemented
+# RUN dotnet tool install snitch --tool-path /tools --version 2.0.0
 
 RUN dotnet tool restore
 
@@ -58,15 +60,16 @@ COPY ["startsonar.sh", "startsonar.sh"]
 
 COPY . .
 
-RUN dotnet build HomeBudgetIdentityApi.sln -c Release --no-incremental --framework:net8.0 -maxcpucount:1 -o /app/build
+RUN dotnet build HomeBudgetIdentityApi.sln -c Release --no-incremental --framework:net9.0 -maxcpucount:1 -o /app/build
 
-RUN /tools/snitch
+# Not supported for .net 9.0 release, will be fixed, as soon as, the dedicated updated will be implemented
+# RUN /tools/snitch
 
 FROM build AS publish
 RUN dotnet publish HomeBudgetIdentityApi.sln \
     --no-dependencies \
     --no-restore \
-    --framework net8.0 \
+    --framework net9.0 \
     -c Release \
     -v Diagnostic \
     -o /app/publish

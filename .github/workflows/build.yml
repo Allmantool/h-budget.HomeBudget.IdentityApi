@@ -39,17 +39,17 @@ jobs:
           java-version: "21"
 
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "9.0.x"
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
@@ -57,7 +57,7 @@ jobs:
 
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
@@ -88,8 +88,8 @@ jobs:
       - name: Install external tools for quality gate verification
         shell: bash
         run: |
-          dotnet tool install --global JetBrains.dotCover.GlobalTool --version 2023.2.3
-          dotnet tool install --global dotnet-sonarscanner --version 5.14.0
+          dotnet tool install --global JetBrains.dotCover.GlobalTool --version 2023.2.5
+          dotnet tool install --global dotnet-sonarscanner --version 9.0.2
 
       - name: Make the scanner script file executable
         run: |
